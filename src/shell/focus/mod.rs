@@ -344,9 +344,7 @@ impl Common {
             .cloned()
             .collect::<Vec<_>>();
         for seat in &seats {
-            update_pointer_focus(state, &seat);
-
-            let mut shell = state.common.shell.write().unwrap();
+            let shell = state.common.shell.write().unwrap();
             let output = seat.focused_or_active_output();
 
             // If the focused or active output is not in the list of outputs, switch to the first output
@@ -356,7 +354,11 @@ impl Common {
                 }
                 continue;
             }
+            drop(shell);
 
+            update_pointer_focus(state, &seat);
+
+            let mut shell = state.common.shell.write().unwrap();
             let last_known_focus = ActiveFocus::get(&seat);
 
             if let Some(target) = last_known_focus {

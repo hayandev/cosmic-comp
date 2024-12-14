@@ -769,6 +769,11 @@ impl Workspaces {
                 }
             } else {
                 workspace_state.remove_group_output(&set.group, output);
+                seats.for_each(|seat| {
+                    if seat.focused_output().as_ref() == Some(output) {
+                        seat.set_focused_output(None);
+                    }
+                });
                 self.backup_set = Some(set);
             }
 
