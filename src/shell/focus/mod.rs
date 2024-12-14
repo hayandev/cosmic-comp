@@ -569,6 +569,7 @@ fn update_focus_target(
 fn update_pointer_focus(state: &mut State, seat: &Seat<State>) {
     if let Some(pointer) = seat.get_pointer() {
         let output = seat.active_output();
+        tracing::trace!(?output, "[cosmic-comp disp trace] update_pointer_focus");
         let position = pointer.current_location().as_global();
 
         let mut shell = state.common.shell.write().unwrap();

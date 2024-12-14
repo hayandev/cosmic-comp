@@ -389,6 +389,7 @@ impl State {
             }
             for surface in device.surfaces.values_mut() {
                 outputs_removed.push(surface.output.clone());
+                tracing::trace!(?surface, "[cosmic-comp disp trace] display device removed");
             }
             if let Some(token) = device.event_token.take() {
                 self.common.event_loop_handle.remove(token);

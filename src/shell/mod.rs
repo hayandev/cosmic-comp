@@ -719,6 +719,7 @@ impl Workspaces {
             let new_output = self.sets.get_index(0).map(|(o, _)| o.clone());
             if let Some(new_output) = new_output {
                 for seat in seats {
+                    tracing::trace!(?output, ?new_output, "[cosmic-comp disp trac] seat will be change to ohter output");
                     if &seat.active_output() == output {
                         seat.set_active_output(&new_output);
                     }
@@ -768,6 +769,7 @@ impl Workspaces {
                     set.update_idx(workspace_state, i);
                 }
             } else {
+                tracing::trace!(?output, "[cosmic-comp disp trac] there are not exists any other outputs");
                 workspace_state.remove_group_output(&set.group, output);
                 self.backup_set = Some(set);
             }
